@@ -1,0 +1,8 @@
+#!/bin/sh
+
+pid=$(ps -o pid,cmd -C apt-get | grep /var/lib/lastore/source.d | awk '{print $1}')
+
+if $pid;then
+    kill $pid
+fi
+

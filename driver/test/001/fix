@@ -1,0 +1,2 @@
+#!/bin/sh
+echo "rm /etc/X11/Xorg.conf"
