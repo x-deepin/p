@@ -76,13 +76,6 @@ function get_translation()
 
 function base_markdown()
 {
-    COMMENT md_desc <<EOF
-What's the problem?
-EOF
-    COMMENT zh md_desc <<EOF
-问题是什么?
-EOF
-
     COMMENT md_check <<EOF
 How to check?
 EOF
@@ -97,8 +90,13 @@ EOF
 如何修复?
 EOF
 
+    title=$(head -n1 <<EOF
+$(get_translation description)
+EOF
+)
+
 cat <<EOF
-# $(get_translation md_desc)
+# $title
 $(get_translation description)
 
 # $(get_translation md_check)

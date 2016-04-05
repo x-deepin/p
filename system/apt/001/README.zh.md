@@ -1,4 +1,4 @@
-# 问题是什么?
+# apt-get update长时间无响应
 apt-get update长时间无响应
 
 因为系统更新导致的apt-get卡主导致后续内容全部

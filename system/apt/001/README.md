@@ -1,5 +1,5 @@
-# What's the problem?
-no ack for apt-get update
+# No ack for apt-get update
+No ack for apt-get update
 
 因为系统更新导致的apt-get卡主导致后续内容全部
 无法进行．
