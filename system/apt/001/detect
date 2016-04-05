@@ -1,4 +1,0 @@
-#!/bin/sh
-
-start=$(ps -o start,cmd -C apt-get | grep /var/lib/lastore/source.d | awk '{print $1}')
-echo $start

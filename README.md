@@ -10,6 +10,18 @@
 
 3. 通过github api与各发型版的wiki/bug tracking system关联起来
 
+# 如何编写修复脚本
+1. 参考 https://github.com/x-deepin/p/blob/master/system/apt/001 下的fix脚本进行编写
+  - 首先载入根目录下的functions文件
+    ``` source ../../../functions ```
+  - 然后使用COMMENT指令分别定义description, check, fix三者的描述
+  - 分别定义实际操作的check, fix函数
+2. 运行编写的脚本并生成支持语言的README.
+```
+./fix > README.md
+LANG=zh_CN ./fix > README.zh.md
+```
+
 # 怎么玩?
 ```
 ├── driver

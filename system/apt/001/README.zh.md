@@ -1,11 +1,11 @@
-# What's the problem?
-no ack for apt-get update
+# 问题是什么?
+apt-get update长时间无响应
 
 因为系统更新导致的apt-get卡主导致后续内容全部
 无法进行．
 
-# How to check?
-Get the result by checking file existing in /var/log/lastore.
+# 如何检查?
+通过检测/var/log/lastore/下面是否包含旧有的日志文件目录判断结果
 
 ```
 check () 
@@ -15,8 +15,8 @@ check ()
 }
 ```
 
-# How to fix?
-just remove the old files
+# 如何修复?
+删掉旧有文件即可
 
 ```
 fix () 

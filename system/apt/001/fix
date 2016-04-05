@@ -1,8 +1,47 @@
-#!/bin/sh
+#!/bin/bash
 
-pid=$(ps -o pid,cmd -C apt-get | grep /var/lib/lastore/source.d | awk '{print $1}')
+source ../../../functions
 
-if $pid;then
-    kill $pid
-fi
+COMMENT description <<EOF
+no ack for apt-get update
 
+因为系统更新导致的apt-get卡主导致后续内容全部
+无法进行．
+EOF
+COMMENT zh description <<EOF
+apt-get update长时间无响应
+
+因为系统更新导致的apt-get卡主导致后续内容全部
+无法进行．
+EOF
+
+
+COMMENT check <<EOF
+Get the result by checking file existing in /var/log/lastore.
+EOF
+COMMENT zh check <<EOF
+通过检测/var/log/lastore/下面是否包含旧有的日志文件目录判断结果
+EOF
+function check()
+{
+    start=$(ps -o start,cmd -C apt-get | grep /var/lib/lastore/source.d | awk '{print $1}')
+    echo $start
+}
+
+
+COMMENT fix <<EOF
+just remove the old files
+EOF
+COMMENT zh fix <<EOF
+删掉旧有文件即可
+EOF
+function fix()
+{
+    pid=$(ps -o pid,cmd -C apt-get | grep /var/lib/lastore/source.d | awk '{print $1}')
+
+    if $pid;then
+	kill $pid
+    fi
+}
+
+base_main $*

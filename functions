@@ -1,0 +1,135 @@
+#!/bin/bash
+
+lang=${LANG%_*}
+declare -A comments
+
+function base_main() 
+{
+    action="_markdown"
+
+    # dispatch arguments
+    while [ ${#} -gt 0 ]; do
+	case ${1} in
+            -f|--fix) action="_fix"; shift;;
+            -c|--check) action="_check"; shift;;
+            -h|--help) action="_help"; break;;
+	    -d|--markdown) action="_markdown"; shift;;
+	    --force) force=t; shift;;
+	    -l|--lang) lang=${1}; shift;;
+            *) action="_help"; shift;;
+	esac
+    done
+
+    if [ "$lang" == "en" ]; then
+	lang=""
+    else
+	lang="_$lang"
+    fi
+
+    case $action in
+	_fix)
+	    if [ $force ]; then
+
+		fix
+	    else
+		get_translation fix
+		declare -f fix
+	    fi
+	    ;;
+	_check) check
+	    if [ $force ]; then
+		check
+	    else
+		get_translation check
+		declare -f check
+	    fi
+	    ;;
+	_description)
+	    get_translation "description"
+	    ;;
+	_markdown) base_markdown;;
+	_help) base_help;;
+    esac
+}
+
+function COMMENT()
+{
+    if [ ${#} -eq 1 ]; then
+	IFS='\n' read -r -d '' tmp || true;
+	comments["${1}"]=$tmp
+    else
+	IFS='\n' read -r -d '' tmp || true;
+	comments["${2}_${1}"]=$tmp
+    fi
+}
+
+function get_translation()
+{
+    origin=${comments["$1"]}
+    locale=${comments["$1$lang"]}
+    if [ "$locale" ]; then
+	echo "$locale"
+    else
+	echo "$origin"
+    fi
+}
+
+function base_markdown()
+{
+    COMMENT md_desc <<EOF
+What's the problem?
+EOF
+    COMMENT zh md_desc <<EOF
+问题是什么?
+EOF
+
+    COMMENT md_check <<EOF
+How to check?
+EOF
+    COMMENT zh md_check <<EOF
+如何检查?
+EOF
+
+    COMMENT md_fix <<EOF
+How to fix?
+EOF
+    COMMENT zh md_fix <<EOF
+如何修复?
+EOF
+
+cat <<EOF
+# $(get_translation md_desc)
+$(get_translation description)
+
+# $(get_translation md_check)
+$(get_translation check)
+
+\`\`\`
+$(declare -f check)
+\`\`\`
+
+# $(get_translation md_fix)
+$(get_translation fix)
+
+\`\`\`
+$(declare -f fix)
+\`\`\`
+
+EOF
+}
+ 
+function base_help()
+{
+    cat <<EOF
+Options:
+    -f|--fix) run the fix function.
+    -c|--check) run the check function.
+    -d|--doc) generate the README files in markdown format.
+    -l|--lang) specify display language.
+    -h|--help) print this usage.
+
+
+    This script should not used directly!
+EOF
+    exit 1
+}
