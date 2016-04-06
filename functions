@@ -36,7 +36,7 @@ function base_main()
 		declare -f fix
 	    fi
 	    ;;
-	_check) check
+	_check)
 	    if [ $force ]; then
 		check
 	    else
