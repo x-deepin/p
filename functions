@@ -1,9 +1,10 @@
 #!/bin/bash
 
 lang=${LANG%_*}
+declare verbose
 declare -A comments
 
-function base_main() 
+function base_main()
 {
     action="_markdown"
 
@@ -14,8 +15,10 @@ function base_main()
             -c|--check) action="_check"; shift;;
             -h|--help) action="_help"; break;;
 	    -d|--markdown) action="_markdown"; shift;;
+	    -t|--title) action="_title"; shift;;
 	    --force) force=t; shift;;
 	    -l|--lang) lang=${1}; shift;;
+	    -v|--verbose) verbose=t; shift;;
             *) action="_help"; shift;;
 	esac
     done
@@ -33,7 +36,9 @@ function base_main()
 		fix
 	    else
 		get_translation fix
-		declare -f fix
+		if [[ $verbose ]]; then
+		    declare -f fix
+		fi
 	    fi
 	    ;;
 	_check)
@@ -41,11 +46,15 @@ function base_main()
 		check
 	    else
 		get_translation check
-		declare -f check
+		if [[ $verbose ]]; then
+		    declare -f check
+		fi
 	    fi
 	    ;;
-	_description)
-	    get_translation "description"
+	_title)
+		head -n1 <<EOF
+$(get_translation "description")
+EOF
 	    ;;
 	_markdown) base_markdown;;
 	_help) base_help;;
@@ -74,6 +83,13 @@ function get_translation()
     fi
 }
 
+function render_code()
+{
+    echo \`\`\`
+    echo "$(declare -f $1)"
+    echo \`\`\`
+}
+
 function base_markdown()
 {
     COMMENT md_check <<EOF
@@ -97,37 +113,40 @@ EOF
 
 cat <<EOF
 # $title
+
 $(get_translation description)
 
 # $(get_translation md_check)
+
 $(get_translation check)
 
-\`\`\`
-$(declare -f check)
-\`\`\`
+$([[ $verbose ]] && render_code check)
 
 # $(get_translation md_fix)
+
 $(get_translation fix)
 
-\`\`\`
-$(declare -f fix)
-\`\`\`
-
+$([[ $verbose ]] && render_code fix)
 EOF
 }
- 
+
 function base_help()
 {
     cat <<EOF
 Options:
-    -f|--fix) run the fix function.
-    -c|--check) run the check function.
+    -f|--fix) dry run the fix function.
+    -c|--check) dry run the check function.
     -d|--doc) generate the README files in markdown format.
+    -t|--title) show the title of the problem.
     -l|--lang) specify display language.
+    -v|--verbose) show code in render document.
     -h|--help) print this usage.
-
+    --force) force run the function.
 
     This script should not used directly!
+
+    ./fix -v > README.md
+    LANG=zh_CN ./fix -v > README.zh.md
 EOF
     exit 1
 }
