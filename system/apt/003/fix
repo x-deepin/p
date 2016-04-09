@@ -1,0 +1,57 @@
+#!/bin/bash
+
+source ../../../functions
+
+COMMENT description <<EOF
+Broken package system by unexpected interrupt operation
+
+apt and dpkg have their internal status. It can't work
+properly if the running operation was unexpected interrupt,
+e.g., force reboot.
+EOF
+
+COMMENT zh description <<EOF
+意外的终止操作导致异常状态
+
+apt以及dpkg都有内部状态如果强制或意外终止正在
+进行的任务很有可能导致包管理系统进入不一致状态．
+EOF
+
+COMMENT zh check <<EOF
+1. 快速通过/var/lib/dpkg/updates目录情况检测
+   是否存在dpkg异常终止．
+2. 通过apt-get check检测是否存在apt中断问题．
+EOF
+COMMENT check <<EOF
+1. quickly check the status of /var/lib/dpkg/lock.
+2. use "apt-get check" to see whether the apt broken.
+EOF
+function check()
+{
+    pgrep dpkg > /dev/null 2>&1
+    if [[ $? == 0 && -e /var/lib/dpkg/updates ]]; then
+	exit 1
+    fi
+    exit 0 
+}
+
+COMMENT zh fix <<EOF
+1. 使用dpkg --configre -a修复dpkg问题
+2. 使用apt-get install -f修复apt问题
+EOF
+COMMENT fix <<EOF
+1. dpkg --configure -a to fix dpkg broken
+2. apt-get install -f to fix apt broken
+EOF
+function fix()
+{
+    echo "Fixing dpkg..."
+    sudo dpkg --force-confold --configure -a
+    echo "Done"
+    echo "Fixing apt..."
+    sudo apt-get install -f
+    echo "Done"
+}
+
+
+base_main $*
