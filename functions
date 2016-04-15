@@ -3,6 +3,7 @@
 lang=${LANG%_*}
 declare verbose
 declare -A comments
+declare -A META
 
 function base_main()
 {

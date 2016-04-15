@@ -1,6 +1,12 @@
 #!/bin/bash
-
 source ../../../functions
+
+META[AUTHOR]="Xia Bin<xiabin@deepin.com>"
+META[AUTO_CHECK]=false
+META[AUTO_FIX]=false
+META[VALIDATE_UNTIL]="2016-11-2"
+
+
 COMMENT description <<EOF
 Wrong package version in local system
 
@@ -116,5 +122,4 @@ function helper_remove_unknown_package()
 # Please ensure it's the last line,
 # otherwise it maybe report command not found for
 # internal help functions.
-
 base_main $*
