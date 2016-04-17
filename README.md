@@ -6,7 +6,9 @@ PSet对应的使用者为两类
 
 1. 直接在线游览生成出来的markdown文档. 作为wiki式的知识积累与完善站点.
    访问对应fix脚本目录的页面即可https://github.com/x-deepin/p/tree/master/system/apt/002
-   很快会支持索引页面的自动生成.
+
+   - [中文索引](https://github.com/x-deepin/p/blob/master/index.zh.md)
+   - [Index](https://github.com/x-deepin/p/blob/master/index.md)
 
 2. 通过fixme客户端自动拉取PSet检测与执行(自动或手动)
 
@@ -162,6 +164,9 @@ fixme客户端本身只依赖一个fix脚本文件. 但在线游览功能需要�
 LANG=en_US ./fix -v > README.md # 默认语言使用en
 LANG=zh_CN ./fix -v > README.zh.md #其他语言在.md前加上对应的2字符代码
 ```
+
+# 生成索引
+在根目录下执行go run index.go 即可自动更新索引文件(index.md)
 
 ## 注意事项
 

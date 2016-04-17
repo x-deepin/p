@@ -15,7 +15,7 @@ function base_main()
             -f|--fix) action="_fix"; shift;;
             -c|--check) action="_check"; shift;;
             -h|--help) action="_help"; break;;
-	    -d|--markdown) action="_markdown"; shift;;
+	    -d|--description) action="_description"; shift;;
 	    -t|--title) action="_title"; shift;;
 	    --force) force=t; shift;;
 	    -l|--lang) lang=${1}; shift;;
@@ -51,6 +51,9 @@ function base_main()
 		    declare -f check
 		fi
 	    fi
+	    ;;
+	_description)
+	    get_translation "description"
 	    ;;
 	_title)
 		head -n1 <<EOF

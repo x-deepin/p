@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function check()
+{
+return
+    cat /var/lib/dpkg/info/lastore-daemon.md5sums | awk '{ $2="/"+$2; print $2, $1, (md5sum $2 | getline)}'
+}
+
+check
