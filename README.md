@@ -49,18 +49,22 @@ fix脚本最后一行有效代码必须调用```base_main $*```以便完成自�
 基本功能如
 
 ```
- % ./fix -h
+% ./fix -h
 Options:
     -f|--fix) dry run the fix function.
     -c|--check) dry run the check function.
-    -d|--doc) generate the README files in markdown format.
+    -d|--description) print the description of the problem.
     -t|--title) show the title of the problem.
     -l|--lang) specify display language.
+    -m|--meta) print the meta data in json format.
     -v|--verbose) show code in render document.
     -h|--help) print this usage.
     --force) force run the function.
 
-    This script should not used directly!
+    Use fixme client instead use this script directly.
+
+    The default action is print the document of
+    the problem in markdown foramt.
 
     ./fix -v > README.md
     LANG=zh_CN ./fix -v > README.zh.md
