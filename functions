@@ -21,6 +21,7 @@ function base_main()
 	    -l|--lang) lang=${1}; shift;;
 	    -m|--meta) action="_meta"; shift;;
 	    -v|--verbose) verbose=t; shift;;
+	    --verify) action="_verify"; break;;
             *) action="_help"; shift;;
 	esac
     done
@@ -32,6 +33,9 @@ function base_main()
     fi
 
     case $action in
+	_verify)
+	    echo -n "verified fixme script"
+	    ;;
 	_fix)
 	    if [ $force ]; then
 
@@ -161,6 +165,7 @@ Options:
     -v|--verbose) show code in render document.
     -h|--help) print this usage.
     --force) force run the function.
+    --verify) just echo "verified fixme script" for fixme verifying validation of the script
 
     Use fixme client instead use this script directly.
 
