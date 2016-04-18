@@ -1,9 +1,29 @@
 #!/bin/bash
 
+source ../../functions
+
+COMMENT description <<EOF
+System files maybe hacked or damaged
+
+It may be caused some weird things happen.
+EOF
+
+COMMENT check <<EOF
+Using /var/lib/dpkg/info/*.md5sums to do the integrity test
+EOF
 function check()
 {
-return
+    return 0
     cat /var/lib/dpkg/info/lastore-daemon.md5sums | awk '{ $2="/"+$2; print $2, $1, (md5sum $2 | getline)}'
 }
 
-check
+COMMENT fix <<EOF
+1. use dpkg -s to find the package contains the damaged files.
+2. use apt-get install --reinstall to fix the damged files.
+EOF
+function fix()
+{
+    return 0
+}
+
+base_main $*

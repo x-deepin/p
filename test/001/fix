@@ -1,4 +1,34 @@
-#!/bin/sh
+#!/bin/bash
+source ../../functions
 
-echo "...."
-echo "I can't fix this."
+META[AUTHOR]="Xia Bin<xiabin@deepin.com>"
+META[AUTO_CHECK]=true
+META[AUTO_FIX]=false
+META[VALIDATE_UNTIL]="2016-11-2"
+
+
+COMMENT description <<EOF
+I can't fix this.
+EOF
+
+COMMENT zh description <<EOF
+无法修复的错误
+EOF
+
+function check()
+{
+    echo "test check"
+    exit 0
+}
+
+function fix()
+{
+    echo "test fix"
+    exit 0
+}
+
+# ---------------------stub main---------------------------
+# Please ensure it's the last line,
+# otherwise it maybe report command not found for
+# internal help functions.
+base_main $*
