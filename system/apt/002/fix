@@ -62,7 +62,7 @@ function check()
 
 COMMENT fix <<EOF
 1. reinstall packages with corrected version
-2. remove the unkown packages
+2. remove the unknown packages
 EOF
 COMMENT zh fix <<EOF
 1. 重新安装仓库中对应的版本．
