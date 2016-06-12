@@ -27,17 +27,15 @@ $ ./bin/fixme show
 
 # 如何编写fix脚本?
 
-fix脚本由Meta,Comment和Common Functions 3个基本元
+fix脚本由Meta,Comment和Common Functions 3个基本元素组成,
+并通过公用代码来实现外围函数与文档的自动生成.
 
-素通组成,并通过公用代码来实现外网函数与文档的自动生成.
-
-另外fix通过相对于根目录的路径隐含了一个pid字段.
+fix通过相对于根目录的路径隐含了一个Problem ID(pid)字段.
 即 system/apt/002/fix 这个P的id为system.apt.002.fix
 
 在使用fixme客户端时需要使用这种格式的pid进行大部分操作.
 
-具体可以参考 https://github.com/x-deepin/p/blob/master/system/apt/002/fix
-脚本进行编写.
+具体可以参考 https://github.com/x-deepin/p/blob/master/system/apt/002/fix 脚本进行编写.
 
 ## Common Functions
 
@@ -137,7 +135,6 @@ $? == 0 时候表示Check执行成功,系统*无*此问题. 其他值表示发�
 
 问题修复代码同Check方法. 结果通过$?返回,为0时候表示修复成功. (此
 时执行Check应该也返回0)
-
 
 
 # 测试脚本内容
