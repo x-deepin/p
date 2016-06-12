@@ -1,5 +1,5 @@
 #!/bin/bash
-source ../../functions
+source ../../../functions
 
 META[AUTHOR]="Jianfeng Liu<liujianfeng@deepin.com>"
 META[AUTO_CHECK]=false
