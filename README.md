@@ -1,3 +1,6 @@
+#脚本分发
+项目内容通过[deepin官方仓库](http://packages.deepin.com/deepin/fixme)进行发布 [![Build Status](https://ci.deepin.io/buildStatus/icon?job=rsync-fixme-test)](https://ci.deepin.io/view/Repos/job/rsync-fixme-test/lastBuild/)
+
 # 问题集 (PSet)
 PSet即Problem的集合. 每个Problme描述了一个问题的基本情况.
 以及通过对应的fix脚本进行检测/修复.
