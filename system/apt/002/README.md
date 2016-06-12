@@ -1,4 +1,5 @@
 # Wrong package version in local system
+
 Wrong package version in local system
 
 Local system may had installed some packages
@@ -6,6 +7,7 @@ which has different version with http://packages.deepin.com/deepin.
 It may be caused local system can't correctly upgrade.
 
 # How to check?
+
 Using apt-show-versions to detect packages which has
 different version in local between http://packages.deepin.com/deepin
 
@@ -40,13 +42,15 @@ check ()
 ```
 
 # How to fix?
+
 1. reinstall packages with corrected version
-2. remove the unkown packages
+2. remove the unknown packages
 
 ```
 fix () 
 { 
     helper_ensure_installed_apt_show_versions;
+    local unknown_packages=();
     IFS='
 ' GLOBIGNORE='*';
     for line in $(apt-show-versions);
@@ -58,10 +62,14 @@ fix ()
             helper_fix_wrong_version_package $(echo $line | cut -d ':' -f1);
         fi;
         if [[ -n $(echo $line | grep -F 'No available') ]]; then
-            helper_remove_unknown_package $(echo $line | cut -d ':' -f1);
+            unknown_packages+=("$(echo $line | cut -d ':' -f1)");
         fi;
     done;
+    if [[ ${#unknown_packages[@]} > 0 ]]; then
+        echo "There has some unknown packages wouldn't remove.";
+        echo "You can execute below command to remove this packages";
+        echo -e "\t sudo apt-get remove ${unknown_packages[@]}";
+    fi;
     exit 0
 }
 ```
-

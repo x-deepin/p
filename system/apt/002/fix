@@ -72,6 +72,7 @@ function fix()
 {
     helper_ensure_installed_apt_show_versions
 
+    local unknown_packages=()
     IFS=$'\n' GLOBIGNORE='*'
 
     for line in $(apt-show-versions)
@@ -85,9 +86,16 @@ function fix()
 	fi
 
 	if [[ $(echo $line | grep -F 'No available') ]]; then
-    	    helper_remove_unknown_package $(echo $line | cut -d ':' -f1)
+	    unknown_packages+=("$(echo $line | cut -d ':' -f1)")
 	fi
     done
+
+    if [[ ${#unknown_packages[@]} > 0 ]]; then
+	echo "There has some unknown packages wouldn't remove."
+	echo "You can execute below command to remove this packages"
+	echo -e "\t sudo apt-get remove ${unknown_packages[@]}"
+    fi
+
 
     exit 0
 }
@@ -110,11 +118,6 @@ function helper_fix_wrong_version_package()
     newV=$(apt-cache madison $1 | grep -E 'http://packages.deepin.com/deepin(.*)Packages' |head -n1| cut -d '|' -f2  | tr -d ' ')
     printf "Try fix $1 from %s to %s\n" $oldV $newV
     sudo apt-get install $1=$newV -y --allow-downgrades
-}
-
-function helper_remove_unknown_package()
-{
-    sudo apt-get remove $1 -y --allow-downgrades
 }
 
 
