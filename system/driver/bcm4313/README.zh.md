@@ -11,7 +11,9 @@ check ()
 { 
     local pci_info="$(lspci -d "14e4:4727" 2>/dev/null)";
     if [ "${pci_info}" ]; then
-        return 1;
+        if ! lsmod | grep brcmsmac; then
+            return 1;
+        fi;
     fi
 }
 ```
