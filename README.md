@@ -149,6 +149,7 @@ $? == 0 时候表示Check执行成功,系统*无*此问题. 其他值表示发�
 - --force 配合-f/-c参数执行真实操作.
 - -l 测试不同语言的效果. 默认从$LANG进行解析.
 
+
 # 生成文档
 
 遵循以上几个简单的规则后实现了Comment以及check && fix两个函数即可
@@ -168,6 +169,17 @@ LANG=zh_CN ./fix -v > README.zh.md #其他语言在.md前加上对应的2字符�
 
 # 生成索引
 在根目录下执行go run index.go 即可自动更新索引文件(index.md)
+
+# 测试与fixme的集成
+在根目录下运行./test_fixme就会尝试使用当前目录作为数据源进行模拟最终效果
+
+一般需要测试
+
+1. ./test_fixme 默认输出
+2. ./test_fixme check $PID
+3. ./test_fixme fix $PID
+
+其中$PID 即为本次修改的fix脚本
 
 ## 注意事项
 

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $* == *"update"* ]]; then
+	echo "Can't run update action in test mode"
+	exit
+fi
+
+/bin/fixme --cache `pwd` --db test_db.json $* && rm test_db.json
