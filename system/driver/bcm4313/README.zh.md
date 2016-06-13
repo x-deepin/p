@@ -23,6 +23,7 @@ check ()
 # 如何修复?
 
 1, 屏蔽掉b43和wl模块
+
 2, 删除软件包bcmwl-kernel-source
 
 ```

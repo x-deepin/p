@@ -23,6 +23,7 @@ check ()
 # How to fix?
 
 1, blacklist kernel module b43 and wl
+
 2, remove package bcmwl-kernel-source
 
 ```

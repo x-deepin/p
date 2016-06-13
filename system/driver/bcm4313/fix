@@ -34,10 +34,12 @@ function check()
 
 COMMENT fix <<EOF
 1, blacklist kernel module b43 and wl
+
 2, remove package bcmwl-kernel-source
 EOF
 COMMENT zh fix <<EOF
 1, 屏蔽掉b43和wl模块
+
 2, 删除软件包bcmwl-kernel-source
 EOF
 function fix()
