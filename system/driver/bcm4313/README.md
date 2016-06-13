@@ -4,7 +4,9 @@ Check wrong kernel module blacklist for bcm4313
 
 # How to check?
 
-check pci of bcm4313
+1, check pci of bcm4313
+
+2, check whether brcmsmac is in use
 
 ```
 check () 

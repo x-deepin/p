@@ -13,10 +13,14 @@ COMMENT zh description <<EOF
 bcm4313网卡中内核模块被错误屏蔽
 EOF
 COMMENT check <<EOF
-check pci of bcm4313
+1, check pci of bcm4313
+
+2, check whether brcmsmac is in use
 EOF
 COMMENT zh check <<EOF
-通过pci检查是否有bcm4313网卡
+1, 通过pci检查是否有bcm4313网卡
+
+2, 检查brcmsmac模块是否在使用
 EOF
 function check()
 {
