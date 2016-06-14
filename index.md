@@ -1,6 +1,9 @@
-- [driver.test.001](https://github.com/x-deepin/p/blob/master//driver/test/001)
+- [system.001](https://github.com/x-deepin/p/blob/master//system/001)
 
-    rm /etc/X11/Xorg.conf
+    System files maybe hacked or damaged
+    
+    It may be caused some weird things happen.
+    
     
 - [system.apt.001](https://github.com/x-deepin/p/blob/master//system/apt/001)
 
@@ -27,9 +30,4 @@
     properly if the running operation was unexpected interrupt,
     e.g., force reboot.
     
-    
-- [test.001](https://github.com/x-deepin/p/blob/master//test/001)
-
-    ....
-    I can't fix this.
     

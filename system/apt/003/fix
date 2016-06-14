@@ -46,10 +46,10 @@ EOF
 function fix()
 {
     echo "Fixing dpkg..."
-    sudo dpkg --force-confold --configure -a
+    dpkg --force-confold --configure -a
     echo "Done"
     echo "Fixing apt..."
-    sudo apt-get install -f
+    apt-get install -f
     echo "Done"
 }
 

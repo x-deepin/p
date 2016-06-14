@@ -68,7 +68,7 @@ fix ()
     if [[ ${#unknown_packages[@]} > 0 ]]; then
         echo "There has some unknown packages wouldn't remove.";
         echo "You can execute below command to remove this packages";
-        echo -e "\t sudo apt-get remove ${unknown_packages[@]}";
+        echo -e "\t apt-get remove ${unknown_packages[@]}";
     fi;
     exit 0
 }
