@@ -1,0 +1,103 @@
+#!/bin/bash
+
+
+
+function new_fix_script()
+{
+    local P_ID=$1
+    
+template=$(cat <<ALL_EOF
+#!/bin/bash
+source ../../../functions
+
+META[AUTHOR]="$(git config --get user.name)<$(git config --get user.email)>"
+#META[AUTO_CHECK]=false
+#META[AUTO_FIX]=false
+#META[VALIDATE_UNTIL]="2016-11-2"
+
+
+COMMENT description <<EOF
+The summary line of the ${P_ID}.
+
+The detail of the ${P_ID}. (the body content)
+EOF
+COMMENT zh description <<EOF
+被针对的问题描述(标题)
+
+详细说明(主体内容)
+EOF
+
+COMMENT check <<EOF
+The description of the script does in check action
+EOF
+COMMENT zh check <<EOF
+检测函数的内容描述
+EOF
+function check()
+{
+   exit 0
+}
+
+COMMENT fix <<EOF
+The description of the script does in fix action
+EOF
+COMMENT zh fix <<EOF
+修复脚本的内容描述
+EOF
+function fix()
+{
+    exit 0
+}
+
+# ---------------------internal help functions-------------------
+
+
+# ---------------------stub main---------------------------
+# Please ensure it's the last line,
+# otherwise it maybe report command not found for
+# internal help functions.
+base_main \$*
+
+ALL_EOF
+)
+
+    local name="$(echo -n $P_ID | sed -e 's/\./\//g')/fix"
+    
+    if [[ -f $name ]]; then
+	echo "There already has the script $1"
+	return 1
+    fi
+    
+    mkdir -p $(dirname $name)
+    echo "$template" > $name
+    chmod a+x $name
+    echo "Created $name"
+}
+
+case $1 in
+    create)
+	shift
+	new_fix_script $1
+	;;
+    test)
+	shift
+	if [[ $* == *"update"* ]]; then
+	    echo "Can't run update action in test mode"
+	    exit
+	fi
+	/bin/fixme --cache `pwd` --db test_db.json $* && rm test_db.json
+	;;
+    gen_doc)
+	go run gen_doc.go
+	;;
+    *)
+	echo "Usage:"
+	echo " $0 test [show|check|-h|fix]"
+	echo -e "\t run fixme with current scripts\n"
+	
+	echo " $0 create test.dummy.001"
+	echo -e "\tcreate a new fix script template\n"
+	
+	echo "$0 gen_doc"
+	echo -e "\tgenerate index.md and the readme.md from fix scripts\n"
+esac
