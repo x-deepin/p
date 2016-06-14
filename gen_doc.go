@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func GetDoc(lang string, p string) string {
+func GetDesc(lang string, p string) string {
 	cmd := exec.Command("./fix", "-d")
 	cmd.Env = []string{"LANG=" + lang}
 	cmd.Dir = p
@@ -21,6 +21,14 @@ func GetDoc(lang string, p string) string {
 	}
 	return string(bs)
 }
+
+func RenderREDME(lang string, p string, name string) {
+	cmd := exec.Command("sh", "-c", "./fix -v > "+name)
+	cmd.Env = []string{"LANG=" + lang}
+	cmd.Dir = p
+	cmd.Run()
+}
+
 func RenderScript(w io.Writer, baseUrl string, pathScript string, doc string) {
 	id := strings.Replace(pathScript, "/", ".", -1)
 	if strings.TrimSpace(doc) == "" {
@@ -78,9 +86,11 @@ func main() {
 	defer enW.Close()
 
 	for _, s := range scripts {
-		RenderScript(zhW, BaseURL, s, GetDoc("zh_CN", s))
+		RenderScript(zhW, BaseURL, s, GetDesc("zh_CN", s))
+		RenderREDME("zh_CN", s, "README.zh.md")
 	}
 	for _, s := range scripts {
-		RenderScript(enW, BaseURL, s, GetDoc("en_US", s))
+		RenderScript(enW, BaseURL, s, GetDesc("en_US", s))
+		RenderREDME("en_US", s, "README.md")
 	}
 }

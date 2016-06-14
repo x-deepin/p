@@ -155,6 +155,8 @@ $? == 0 时候表示Check执行成功,系统*无*此问题. 其他值表示发�
 
 # 生成文档
 
+*可通过go run gen_doc.go自动完成以下步骤"
+
 遵循以上几个简单的规则后实现了Comment以及check && fix两个函数即可
 运行该脚本了. 默认会自动生成markdown格式的文档.
 
@@ -170,8 +172,10 @@ LANG=en_US ./fix -v > README.md # 默认语言使用en
 LANG=zh_CN ./fix -v > README.zh.md #其他语言在.md前加上对应的2字符代码
 ```
 
-# 生成索引
-在根目录下执行go run index.go 即可自动更新索引文件(index.md)
+# 自动文档生成
+运行根目录的go run gen_doc.go即可生成两类文档
+1. index.md
+2. 每个fix脚本目录下的REDAME.md
 
 # 测试与fixme的集成
 在根目录下运行./test_fixme就会尝试使用当前目录作为数据源进行模拟最终效果
