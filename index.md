@@ -31,3 +31,16 @@
     e.g., force reboot.
     
     
+- [system.x11.001](https://github.com/x-deepin/p/blob/master//system/x11/001)
+
+    Wrong permission of Xauthority cause failed login DE
+    
+    1. ~/.Xauthority owner by every user，There have some programs run
+       with sudo may cause this file to be modified unexpected.
+    
+    2. The file of /var/lib/lightdm/.Xauthority owner by display manager.
+      It will cause login failed if the permission of the file is wrong.
+    
+    [Xauthority](https://en.wikipedia.org/wiki/X_Window_authorization)
+    
+    

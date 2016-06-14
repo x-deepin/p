@@ -29,3 +29,16 @@
     进行的任务很有可能导致包管理系统进入不一致状态．
     
     
+- [system.x11.001](https://github.com/x-deepin/p/blob/master//system/x11/001)
+
+    Xauthority 权限错误导致无法登陆系统
+    
+    1. ~/.Xauthority 为每个用户的当前文件，部分程序使用sudo运行
+       时可能导致该文件权限错误, 导致后续无法登陆
+    
+    2. /var/lib/lightdm/.Xauthority 为display manager创建，若错误
+      的安装模式可能导致该文件权限错误，导致后续无法登陆系统
+    
+    [Xauthority](https://en.wikipedia.org/wiki/X_Window_authorization)
+    
+    

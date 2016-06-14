@@ -85,7 +85,7 @@ case $1 in
 	    echo "Can't run update action in test mode"
 	    exit
 	fi
-	/bin/fixme --cache `pwd` --db test_db.json $* && rm test_db.json
+	sudo /bin/fixme --cache `pwd` --db test_db.json $* && rm --force test_db.json
 	;;
     gen_doc)
 	go run gen_doc.go
