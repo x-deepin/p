@@ -116,8 +116,12 @@ function helper_fix_wrong_version_package()
 {
     oldV=$(dpkg -s $1 | grep -E '^Version:\s+(.*)' | cut -d ' ' -f2)
     newV=$(apt-cache madison $1 | grep -E 'http://packages.deepin.com/deepin(.*)Packages' |head -n1| cut -d '|' -f2  | tr -d ' ')
-    printf "Try fix $1 from %s to %s\n" $oldV $newV
-    apt-get install $1=$newV -y --allow-downgrades
+    if [[ $newV != "" ]]; then
+        printf "Try fix $1 from %s to %s\n" $oldV $newV
+        apt-get install -y --allow-downgrades -o Dpkg::Options==--force-confold -- $1=$newV
+    else
+        printf "Can't find new version of $1"
+    fi
 }
 
 
