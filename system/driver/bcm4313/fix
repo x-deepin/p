@@ -1,0 +1,55 @@
+#!/bin/bash
+source ../../../functions
+
+META[AUTHOR]="Jianfeng Liu<liujianfeng@deepin.com>"
+META[AUTO_CHECK]=false
+META[AUTO_FIX]=false
+META[VALIDATE_UNTIL]="2016-11-2"
+
+COMMENT description <<EOF
+Check wrong kernel module blacklist for bcm4313
+EOF
+COMMENT zh description <<EOF
+bcm4313网卡中内核模块被错误屏蔽
+EOF
+COMMENT check <<EOF
+1, check pci of bcm4313
+
+2, check whether brcmsmac is in use
+EOF
+COMMENT zh check <<EOF
+1, 通过pci检查是否有bcm4313网卡
+
+2, 检查brcmsmac模块是否在使用
+EOF
+function check()
+{
+    local pci_info="$(lspci -d "14e4:4727" 2>/dev/null)"
+    if [ "${pci_info}" ]; then
+        if ! lsmod|grep brcmsmac ; then
+            return 1
+        fi
+    fi
+}
+
+COMMENT fix <<EOF
+1, blacklist kernel module b43 and wl
+
+2, remove package bcmwl-kernel-source
+EOF
+COMMENT zh fix <<EOF
+1, 屏蔽掉b43和wl模块
+
+2, 删除软件包bcmwl-kernel-source
+EOF
+function fix()
+{
+    echo "fix bcm4313 --------------------------------"
+    echo "blacklist b43" | sudo tee -a /etc/modprobe.d/bcm.conf
+    echo "blacklist wl" | sudo tee -a /etc/modprobe.d/bcm.conf
+    echo "brcmsmac" | sudo tee -a /etc/modules
+    sudo apt-get remove -y bcmwl-kernel-source
+    exit 0
+}
+
+base_main $*
